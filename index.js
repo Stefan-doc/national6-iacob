@@ -5,6 +5,10 @@ console.log("JavaScript - AJAX");
 // "articleListHtml" will hold the new elements we will create for showing data
 // we need an existing reference so we can bind to it the new elements
 const articleListHtml = document.querySelector(".article-list");
+const commentsListHtml = document.querySelector(".comments-list");
+
+
+
 
 // we will get/fetch the data when user click on a button
 document.getElementById("get-data").addEventListener("click", function () {
@@ -47,17 +51,53 @@ function renderArticles(articleList) {
 }
 
 function renderArticle(articleData) {
+    fetch("https://simple-json-server-scit.herokuapp.com/comments?postId=<postId>")
+    .then(handleFetchResponse)
+    .then(useJSONResponse);
+    function handleFetchResponse(response) {
+        console.log("response", response);
+        return response.json();
+      }
+      function useJSONResponse(json) {
+        console.log(json);
+        renderComments(json);
+      }
+      function renderComments(commentsList) {
+        commentsListHtml.innerText = "";
+        for (const comment of commentsList) {
+          console.log(comment);
+          renderComment(comment);
+        }
+      }
+
   const article = document.createElement("div");
   const articleTitle = document.createElement("h3");
   const articleContent = document.createElement("p");
 
+  const commentsList = document.createElement("div");
+//   const comment = document.createElement("div");
+  const commentUsername = document.createElement("h4");
+  const commentContent = document.createElement("p");
+ 
   article.appendChild(articleTitle);
   article.appendChild(articleContent);
+  article.appendChild(commentsList);
+  article.appendChild(commentUsername);
+  article.appendChild(commentContent);
+
+  commentsList.appendChild(commentUsername);
+  commentsList.appendChild(commentContent);
 
   articleListHtml.appendChild(article);
+  articleListHtml.appendChild(commentsList);
 
-  // after creating the necessary html structure for a article items, we need to populated with data
-  // we use the "articleData" as data source
+//   commentsListHtml.appendChild(comment);
+
+    // after creating the necessary html structure for a article items, we need to populated with data
+     // we use the "articleData" as data source
   articleTitle.innerText = articleData.title;
   articleContent.innerText = articleData.content;
+
+  commentUsername.innerText = commentsList.username;
+  commentContent.innerText = commentsList.content;
 }
