@@ -1,0 +1,36 @@
+#generate-starship {
+    display: block;
+  }
+  
+  .spaceship {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    transition: all 0.3s ease;
+  }
+  
+  .spaceship--start {
+    animation: spaceshipAnimation 0.2s ease infinite;
+  }
+  
+  @keyframes spaceshipAnimation {
+    0% {
+      transform: translateX(0px);
+    }
+  
+    25% {
+      transform: translateX(1px);
+    }
+  
+    50% {
+      transform: translateX(0px);
+    }
+  
+    75% {
+      transform: translateX(-1px);
+    }
+  
+    100% {
+      transform: translateX(-1px);
+    }
+  }
