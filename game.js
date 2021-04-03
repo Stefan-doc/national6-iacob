@@ -68,7 +68,7 @@ class Player extends GameObject {
 class Obstacle extends GameObject {
   constructor() {
     super();
-    this.ref.style.background = "red";
+    this.ref.style.background = "grey";
     this.move(1060, 25);
   }
 
@@ -112,6 +112,25 @@ class ObstacleFactory {
     for (const obstacle of this.obstacles) {
       obstacle.moveLeft();
     }
+  }
+}
+
+class Lives extends GameObject {
+  constructor() {
+    super();
+    this.lives = [];
+    this.generateHtmlRef();
+  }
+
+  generateHtmlRef() {
+    this.ref = document.createElement("img");
+    this.ref.src = "heart.png";
+    this.ref.classList.add("lives");
+    document.getElementById("lifebar").appendChild(this.ref);
+  }
+  
+  removeRef() {
+    this.ref.remove();
   }
 }
 
@@ -171,6 +190,8 @@ function collisionDetection(player, obstacles) {
 // here is were we actually use the classes defined above
 const player = new Player();
 const obstacleFactory = new ObstacleFactory();
+const lives = new Lives();
+
 
 // we need count for creating obstacles based on conditions
 let count = 0;
@@ -196,7 +217,7 @@ let gameLoop = setInterval(() => {
   // if the player collide with any of the obstacles we need to close the game loops, alert the user and refresh the game
   if (collisionDetection(player, obstacleFactory.obstacles)) {
     clearInterval(gameLoop);
-    alert("You hit an obstacle");
+    alert("You lost!");
     window.location = "/";
   }
 
