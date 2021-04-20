@@ -5,6 +5,7 @@ export function Header() {
     return (
         <div className="app-header">
             <AppLogo /> 
+            <p className="app-header_title">To Do Apppp</p>
         </div>
     );
 }
